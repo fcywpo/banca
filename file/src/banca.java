@@ -3,18 +3,18 @@ import java.util.Scanner;
 public class banca {
 	
 	public static boolean calendario( int giorno, int mese, int anno ){
-		if (giorno == 32) {
+		if (giorno >= 32) {
 			return false;
 		} else {
-			if (giorno == 31 && ( mese == 4 || mese == 6  || mese == 9 || mese == 11)) {
+			if (giorno >= 31 && ( mese == 4 || mese == 6  || mese == 9 || mese == 11)) {
 				return false;
 			} else {
 				if ( anno%4==0) {
-					if (giorno == 30 && mese == 2) {
+					if (giorno >= 30 && mese == 2) {
 						return false;
 					}
 				} else {
-					if (giorno == 29 && mese == 2) {
+					if (giorno >= 29 && mese == 2) {
 						return false;
 					}
 				}
@@ -29,6 +29,8 @@ public class banca {
 		System.out.println( "1. Preleva dalla banca" );
 		System.out.println( "2. Deposita in banca" );
 		System.out.println( "3. Investi soldi del tuo conto bancario" );
+		System.out.println( "4. Mese successivo" );
+		System.out.println( "5. Vai a fine investimento" );
 	    System.out.println();
 	    
 	    System.out.print( "Fai la tua scelta: " );
@@ -36,10 +38,10 @@ public class banca {
 	}
 	
 	public static boolean controlNumber( String s ) {
-		int scelta;
+		double scelta;
 		
 		try {	
-			scelta = Integer.parseInt(s);
+			scelta = Double.parseDouble(s);
 		} catch (NumberFormatException e) {
 			System.out.println("In valore inserito non e' numerico!");
 			return false;
@@ -122,10 +124,10 @@ public class banca {
 	    			controllo = controlNumber(sPrelevare);
 	    			
 	    			if (controllo) {
-	    				int preleva = Integer.parseInt(sPrelevare);
+	    				double preleva = Double.parseDouble(sPrelevare);
 	    				
-	    				if ( preleva > banca ) {
-	    					System.out.println("Non puoi prelevare piu' soldi di quelli che hai nel conto!");
+	    				if ( preleva > banca || preleva < 0 ) {
+	    					System.out.println("Non puoi prelevare piu' soldi di quelli che hai nel conto o in negativo!");
 	    				} else {
 	    					portafoglio += preleva;
 	    					banca -= preleva;
@@ -147,10 +149,10 @@ public class banca {
 	    			controllo = controlNumber(sDepositare);
 	    			
 	    			if (controllo) {
-	    				int deposita = Integer.parseInt(sDepositare);
+	    				double deposita = Double.parseDouble(sDepositare);
 	    				
-	    				if ( deposita > banca ) {
-	    					System.out.println("Non puoi depositare piu' soldi di quelli che hai nel portafoglio!");
+	    				if ( deposita > banca || deposita < 0 ) {
+	    					System.out.println("Non puoi depositare piu' soldi di quelli che hai nel portafoglio o in negativo!");
 	    				} else {
 	    					banca += deposita;
 	    					portafoglio -= deposita;
@@ -169,8 +171,8 @@ public class banca {
 			
 			}
 			
-		//}
+		}
 		
-	}
+	//}
 
 }
