@@ -165,6 +165,25 @@ public class banca {
 			}
 
 			case 3:{
+		
+			        System.out.println("Scegli il tipo di investimento:");
+			        System.out.println("1. Breve durata (fino a 12 mesi)");
+			        System.out.println("2. Media durata (13 mesi - 5 anni)");
+			        System.out.println("3. Lunga durata (oltre 5 anni)");
+			        
+			        scelta = tastiera.nextInt();
+			        
+			        if(scelta < 1 || scelta > 3) {
+			        	System.out.println("Scelta non valida");
+			        	return;
+			        	
+			        }
+			        
+			        System.out.print("Inserisci l'importo che vuoi investire: ");
+			        double importoInvestito = tastiera.nextDouble();
+			        
+			        System.out.print("Inserisci il periodo di investimento (in mesi): ");
+			        
 	
 				break;
 			}
