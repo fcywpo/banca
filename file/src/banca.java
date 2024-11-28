@@ -53,23 +53,26 @@ public class banca {
 
 	public static void main(String[] args) {
 		Scanner tastiera = new Scanner (System.in);
+		boolean continua = true; //variabile per fare un ciclo infinito
 		
-		int giorno=0, mese=1, anno = 2000, scelta=-1;
-		double banca=0.0, portafoglio=100.0;
+		int mese=1, anno = 2000, scelta=-1;
+		double banca=0.0, portafoglio=0.0;
 		boolean noCash = false;
 		
-		//for ( int i=0; i<370 ; i++) {
-			giorno++;
+		while (continua){
 			
-			if (giorno == 32 && mese == 12 ) {
-				giorno = 1;
+			if ( mese == 13 ) {
 				mese = 1;
 				anno++;
 				portafoglio += 100;
 			} else {
-				if ( !calendario(giorno, mese, anno) ) {
-					giorno = 1;
-					mese++;
+				if ( mese > 13 ) {
+					do {
+						mese -= 12;
+						anno++;
+						portafoglio += 100;
+					} while (mese > 12);
+				} else {
 					portafoglio += 100;
 				}
 			}
@@ -79,7 +82,7 @@ public class banca {
 	            
 	            do {
 	            	
-	    			System.out.println("\nData: " + giorno + "/" + mese + "/" + anno);
+	    			System.out.println("\nData: " + mese + "/" + anno);
 	    			System.out.println("Soldi in banca: " + banca + "€");
 	    			System.out.println("Soldi nel portafoglio: " + portafoglio + "€");
 	    			menuPrinc();
@@ -89,7 +92,7 @@ public class banca {
 	    				
 	    			if (controllo) {
 	    				scelta = Integer.parseInt(sceltaS);
-	    				if (scelta < 1 || scelta > 3) {
+	    				if (scelta < 1 || scelta > 5) {
 	    					System.out.println("La scelta inserita non e' presente nell'elenco!");
 	    					controllo = false;
 	    				}
@@ -98,11 +101,11 @@ public class banca {
 	    		} while (!controllo);
 	             
 	            
-	            if ( !noCash && scelta == 2 ){
+	            if ( !noCash && (scelta == 2 || scelta == 4)){
 	            	noCash = true;
 	            }
 	            
-	            if ( scelta != 2 && banca == 0 ){
+	            if ( (scelta == 2 || scelta != 4) && banca == 0 ){
 	            	noCash = false;
 	            	System.out.println ( "Per fare questa operazione devi prima inserire soldi in banca!" );
 	            	System.out.println();
@@ -151,7 +154,7 @@ public class banca {
 	    			if (controllo) {
 	    				double deposita = Double.parseDouble(sDepositare);
 	    				
-	    				if ( deposita > banca || deposita < 0 ) {
+	    				if ( deposita > portafoglio || deposita < 0 ) {
 	    					System.out.println("Non puoi depositare piu' soldi di quelli che hai nel portafoglio o in negativo!");
 	    				} else {
 	    					banca += deposita;
@@ -188,11 +191,22 @@ public class banca {
 				break;
 			}
 			
+			case 4:{
+				mese++;
+	
+				break;
+			}
+			
+			case 5:{
+				
+				break;
+			}
+			
 			}
 			
 		}
 		
-	//}
+	}
 
 	
 	// test pop
