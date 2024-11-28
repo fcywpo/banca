@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Random;
 
 public class banca {
 	
@@ -53,6 +54,8 @@ public class banca {
 
 	public static void main(String[] args) {
 		Scanner tastiera = new Scanner (System.in);
+		Random random = new Random();
+		
 		boolean continua = true; //variabile per fare un ciclo infinito
 		
 		int mese=1, anno = 2000, scelta=-1;
@@ -105,7 +108,7 @@ public class banca {
 	            	noCash = true;
 	            }
 	            
-	            if ( (scelta == 2 || scelta != 4) && banca == 0 ){
+	            if ( (scelta != 2 || scelta != 4) && banca == 0 ){
 	            	noCash = false;
 	            	System.out.println ( "Per fare questa operazione devi prima inserire soldi in banca!" );
 	            	System.out.println();
@@ -186,6 +189,93 @@ public class banca {
 			        double importoInvestito = tastiera.nextDouble();
 			        
 			        System.out.print("Inserisci il periodo di investimento (in mesi): ");
+			        int mesiInvestimento = tastiera.nextInt();
+			        
+			        if (importoInvestito > banca) {
+			            System.out.println("Non hai abbastanza fondi per questo investimento.");
+			            return;
+			        }
+			        
+			        // Sottraiamo l'importo investito dal saldo iniziale
+			        banca -= importoInvestito;
+			        
+			        // Determina il tipo di investimento in base al periodo
+			        String tipoInvestimento;
+			        if (mesiInvestimento <= 12) {
+			            tipoInvestimento = "Breve";
+			        } else if (mesiInvestimento <= 60) {
+			            tipoInvestimento = "Medio";
+			        } else {
+			            tipoInvestimento = "Lungo";
+			        }
+			        
+			        // Simulazione del rischio
+			        double percentualeGuadagno = 0;
+			        double percentualePerdita = 0;
+			        boolean haGuadagnato = false;
+
+			        int esito = random.nextInt(100) + 1; // Numero casuale da 1 a 100
+			       
+			        switch (tipoInvestimento) {
+			            case "Breve":
+			                if (esito <= 80) {
+			                    haGuadagnato = true;
+			                    percentualeGuadagno = random.nextDouble() * 10; // Guadagno fino al 10%
+			                } else {
+			                    percentualePerdita = random.nextDouble() * 10; // Perdita fino al 10%
+			                }
+			                break;
+
+			            case "Medio":
+			                if (esito <= 60) {
+			                    haGuadagnato = true;
+			                    percentualeGuadagno = random.nextDouble() * 20; // Guadagno fino al 20%
+			                } else {
+			                    percentualePerdita = random.nextDouble() * 20; // Perdita fino al 20%
+			                }
+			                break;
+
+			            case "Lungo":
+			                if (esito <= 50) {
+			                    haGuadagnato = true;
+			                    percentualeGuadagno = random.nextDouble() * 30; // Guadagno fino al 30%
+			                } else {
+			                    percentualePerdita = random.nextDouble() * 120; // Perdita fino al 120%
+			                }
+			                break;
+			        }
+			        
+			     // Calcola il risultato dell'investimento
+			     
+			        double variazione; // Questa variabile conterrà la variazione (guadagno o perdita)
+
+			        if (haGuadagnato) {
+			            variazione = importoInvestito * (percentualeGuadagno / 100);
+			            System.out.println("Hai guadagnato il " + percentualeGuadagno + "%: hai guadagnato " + variazione + " euro!");
+			        } else {
+			            variazione = importoInvestito * (percentualePerdita / 100);
+			            System.out.println("Hai perso il " + percentualePerdita + "%: hai perso " + variazione + " euro!");
+			        }
+
+			        // Stampa il saldo finale  //senza collegamento banca
+			        /*double saldoFinale;
+			        if (haGuadagnato) {
+			            saldoFinale = importoInvestito + variazione;
+			        } else {
+			            saldoFinale = importoInvestito - variazione;
+			        }
+			        System.out.println("Il tuo saldo finale è: " + saldoFinale + " euro.");
+			        */
+			        
+			        //con collegamento banca
+			        if (haGuadagnato) {
+			            banca = importoInvestito + variazione;
+			        } else {
+			            banca = importoInvestito - variazione;
+			        }
+			        System.out.println("Il tuo saldo finale è: " + banca + " euro.");//vedi se va una volta aggiustato il run e poi dimmi che in caso aggiusto
+			        
+			        //agg cont<0
 			        
 	
 				break;
