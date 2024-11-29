@@ -3,27 +3,6 @@ import java.util.Random;
 
 public class banca {
 	
-	public static boolean calendario( int giorno, int mese, int anno ){
-		if (giorno >= 32) {
-			return false;
-		} else {
-			if (giorno >= 31 && ( mese == 4 || mese == 6  || mese == 9 || mese == 11)) {
-				return false;
-			} else {
-				if ( anno%4==0) {
-					if (giorno >= 30 && mese == 2) {
-						return false;
-					}
-				} else {
-					if (giorno >= 29 && mese == 2) {
-						return false;
-					}
-				}
-			}
-		}
-		return true;
-	}
-	
 	public static void menuPrinc () {
 		
 		System.out.println("\nBANCA");
@@ -108,7 +87,7 @@ public class banca {
 	            	noCash = true;
 	            }
 	            
-	            if ( (scelta != 2 || scelta != 4) && banca == 0 ){
+	            if ( (scelta != 2 || scelta != 4) && banca <= 0 ){
 	            	noCash = false;
 	            	System.out.println ( "Per fare questa operazione devi prima inserire soldi in banca!" );
 	            	System.out.println();
