@@ -35,6 +35,9 @@ public class banca {
 		Scanner tastiera = new Scanner (System.in);
 		Random random = new Random();
 		
+		//Scanner per break
+		Scanner sc = new Scanner(System.in);
+		
 		boolean continua = true; //variabile per fare un ciclo infinito
 		
 		
@@ -97,6 +100,8 @@ public class banca {
 	            if ( (scelta != 2 || scelta != 4) && banca <= 0 ){
 	            	noCash = false;
 	            	System.out.println ( "Per fare questa operazione devi prima inserire soldi in banca!" );
+	            	System.out.print("Premi invio per continuare. ");
+					sc.nextLine();
 	            	System.out.println();
 	            }
 	            
@@ -128,6 +133,8 @@ public class banca {
 	    			
 				}while (!controllo);
     			
+				System.out.print("Premi invio per continuare. ");
+				sc.nextLine();
 				break;
 			}
 			
@@ -153,6 +160,8 @@ public class banca {
 	    			
 				}while (!controllo);
     			
+				System.out.print("Premi invio per continuare. ");
+				sc.nextLine();
 				break;
 			}
 
@@ -270,19 +279,24 @@ public class banca {
 			        
 					}
 			        
-	
+				System.out.print("Premi invio per continuare. ");
+				sc.nextLine();
 				break;
 			}
 			
 			case 4:{
 				mese++;
 				nextmesi++;
-	
+				
+				System.out.print("Premi invio per continuare. ");
+				sc.nextLine();
 				break;
 			}
 			
 			case 5:{
 				
+				System.out.print("Premi invio per continuare. ");
+				sc.nextLine();
 				break;
 			}
 			
