@@ -37,9 +37,16 @@ public class banca {
 		
 		boolean continua = true; //variabile per fare un ciclo infinito
 		
+		
 		int mese=1, anno = 2000, scelta=-1;
 		double banca=0.0, portafoglio=0.0;
 		boolean noCash = false;
+		
+		//variabili x investimento
+		int nextmesi=0;
+		double saldoFinale;
+		boolean durataInvestimento=false;
+		
 		
 		while (continua){
 			
@@ -150,30 +157,31 @@ public class banca {
 			}
 
 			case 3:{
-		
-			        System.out.println("Scegli il tipo di investimento:");
+				
+				//trycatch fare
+				
+					if(durataInvestimento) {
+						
+						 System.out.println("Stai gia' facendo un investimento");
+						 
+					}else{
+
 			        System.out.println("1. Breve durata (fino a 12 mesi)");
 			        System.out.println("2. Media durata (13 mesi - 5 anni)");
 			        System.out.println("3. Lunga durata (oltre 5 anni)");
 			        
-			        scelta = tastiera.nextInt();
-			        
-			        if(scelta < 1 || scelta > 3) {
-			        	System.out.println("Scelta non valida");
-			        	return;
-			        	
-			        }
-			        
 			        System.out.print("Inserisci l'importo che vuoi investire: ");
 			        double importoInvestito = tastiera.nextDouble();
-			        
-			        System.out.print("Inserisci il periodo di investimento (in mesi): ");
-			        int mesiInvestimento = tastiera.nextInt();
-			        
+
 			        if (importoInvestito > banca) {
 			            System.out.println("Non hai abbastanza fondi per questo investimento.");
 			            return;
 			        }
+			        
+			        System.out.print("Inserisci il periodo di investimento (in mesi): ");
+			        int mesiInvestimento = tastiera.nextInt();
+			          
+			        durataInvestimento=true;
 			        
 			        // Sottraiamo l'importo investito dal saldo iniziale
 			        banca -= importoInvestito;
@@ -230,31 +238,37 @@ public class banca {
 
 			        if (haGuadagnato) {
 			            variazione = importoInvestito * (percentualeGuadagno / 100);
-			            System.out.println("Hai guadagnato il " + percentualeGuadagno + "%: hai guadagnato " + variazione + " euro!");
 			        } else {
 			            variazione = importoInvestito * (percentualePerdita / 100);
-			            System.out.println("Hai perso il " + percentualePerdita + "%: hai perso " + variazione + " euro!");
 			        }
 
-			        // Stampa il saldo finale  //senza collegamento banca
-			        /*double saldoFinale;
-			        if (haGuadagnato) {
-			            saldoFinale = importoInvestito + variazione;
-			        } else {
-			            saldoFinale = importoInvestito - variazione;
-			        }
-			        System.out.println("Il tuo saldo finale è: " + saldoFinale + " euro.");
-			        */
 			        
-			        //con collegamento banca
-			        if (haGuadagnato) {
-			            banca = importoInvestito + variazione;
-			        } else {
-			            banca = importoInvestito - variazione;
-			        }
-			        System.out.println("Il tuo saldo finale è: " + banca + " euro.");//vedi se va una volta aggiustato il run e poi dimmi che in caso aggiusto
+			        //da qui
+			        if(nextmesi>=mesiInvestimento) {
+			        	
+			        	 //saldo finale  
+				        if (haGuadagnato) {
+				            saldoFinale = importoInvestito + variazione;
+				            saldoFinale =+ banca;
+				            System.out.println("Hai guadagnato : " + saldoFinale + " euro ");
+				        } else {
+				            saldoFinale = importoInvestito - variazione;
+				            saldoFinale =- banca;
+				            System.out.println("Hai perso  : " + saldoFinale + " euro ");
+				        }
+			        	
+			        	
+			        	//Se si va in debito con la banca
+			        	if (banca < 0) {
+		                	System.out.println("Attenzione: il tuo conto è in rosso! /n Per poter fare altre transazioni o investimenti devi coprire il debito");
+		            	}
+			        	
+			        	durataInvestimento=false;
+			        	nextmesi=0;
+			        	
+			        }//a qui copia
 			        
-			        //agg cont<0
+					}
 			        
 	
 				break;
@@ -262,6 +276,7 @@ public class banca {
 			
 			case 4:{
 				mese++;
+				nextmesi++;
 	
 				break;
 			}
