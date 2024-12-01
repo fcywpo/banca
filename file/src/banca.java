@@ -309,7 +309,7 @@ public class banca {
 			            case "Medio":{
 			                if (esito <= 60) {
 			                    haGuadagnato = true;
-			                    percentualeGuadagno = random.nextDouble() * 50; // Guadagno fino al 40%
+			                    percentualeGuadagno = random.nextDouble() * 50; // Guadagno fino al 50%
 			                } else {
 			                    percentualePerdita = random.nextDouble() * 80; // Perdita fino al 80%
 			                }
