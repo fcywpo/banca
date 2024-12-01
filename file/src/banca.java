@@ -17,11 +17,25 @@ public class banca {
 		
 	}
 	
-	public static boolean controlNumber( String s ) {
+	public static boolean controlNumberDouble( String s ) {
 		double scelta;
 		
 		try {	
 			scelta = Double.parseDouble(s);
+		} catch (NumberFormatException e) {
+			System.out.println("In valore inserito non e' numerico!");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	public static boolean controlNumberInt( String s ) {
+		int scelta;
+		
+		try {	
+			scelta = Integer.parseInt(s);
 		} catch (NumberFormatException e) {
 			System.out.println("In valore inserito non e' numerico!");
 			return false;
@@ -40,15 +54,14 @@ public class banca {
 		
 		boolean continua = true; //variabile per fare un ciclo infinito
 		
-		
 		int mese=1, anno = 2000, scelta=-1;
-		double banca=0.0, portafoglio=0.0;
+		double banca=0.0, portafoglio=100.0;
 		boolean noCash = false;
 		
 		//variabili x investimento
-		int nextmesi=0;
-		double saldoFinale;
-		boolean durataInvestimento=false;
+		int mesiInvestimento=0;
+		double saldoFinale = 0.0, variazione = 0.0; // Questa variabile conterrà la variazione (guadagno o perdita)
+		boolean durataInvestimento=false, haGuadagnato = false, rosso = false;
 		
 		
 		while (continua){
@@ -56,16 +69,12 @@ public class banca {
 			if ( mese == 13 ) {
 				mese = 1;
 				anno++;
-				portafoglio += 100;
 			} else {
 				if ( mese > 13 ) {
 					do {
 						mese -= 12;
 						anno++;
-						portafoglio += 100;
 					} while (mese > 12);
-				} else {
-					portafoglio += 100;
 				}
 			}
 			
@@ -74,13 +83,39 @@ public class banca {
 	            
 	            do {
 	            	
+	            	if(mesiInvestimento==0 && durataInvestimento) {
+			        	
+			        	 //saldo finale  
+				        if (haGuadagnato) {
+				            System.out.println("Hai guadagnato: " + variazione + " euro ");
+				        } else {
+				            System.out.println("Hai perso: " + variazione + " euro ");
+				        }
+				        
+				        if (!rosso) {
+				        	banca += saldoFinale;
+				        } else {
+				        	banca -= saldoFinale;
+				        }
+				        
+			        	//Se si va in debito con la banca
+			        	if (banca < 0) {
+		                	System.out.println("Attenzione: il tuo conto è in rosso! \n Per poter fare altre transazioni o investimenti devi coprire il debito");
+		            	}
+			        	
+			        	durataInvestimento=false;
+			        	
+			        }
+	            	
+	            	banca = Math.round(banca*100.0)/100.0; //tronco sempre a due cifre dopo la virgola
+	            	
 	    			System.out.println("\nData: " + mese + "/" + anno);
 	    			System.out.println("Soldi in banca: " + banca + "€");
 	    			System.out.println("Soldi nel portafoglio: " + portafoglio + "€");
 	    			menuPrinc();
 	    			String sceltaS = tastiera.nextLine();
 	    			
-	    			controllo = controlNumber(sceltaS);
+	    			controllo = controlNumberDouble(sceltaS);
 	    				
 	    			if (controllo) {
 	    				scelta = Integer.parseInt(sceltaS);
@@ -93,16 +128,23 @@ public class banca {
 	    		} while (!controllo);
 	             
 	            
-	            if ( !noCash && (scelta == 2 || scelta == 4)){
+	            if ( scelta == 4 ) {
 	            	noCash = true;
-	            }
-	            
-	            if ( (scelta != 2 || scelta != 4) && banca <= 0 ){
-	            	noCash = false;
-	            	System.out.println ( "Per fare questa operazione devi prima inserire soldi in banca!" );
-	            	System.out.print("Premi invio per continuare. ");
-					sc.nextLine();
-	            	System.out.println();
+	            } else {
+	            	if ( scelta == 5 && banca >= 0 ) {
+	            		noCash = true;
+	            	} else {
+	            		if ( scelta != 2 && banca <= 0 ){
+				            noCash = false;
+				            System.out.println ( "Per fare questa operazione devi prima inserire soldi in banca o saldare i debiti!" );
+				            System.out.print("Premi invio per continuare. ");
+							sc.nextLine();
+				            System.out.println();
+		            	} else {
+				            noCash = true;
+				        }
+	            	}
+	            	
 	            }
 	            
 	        } while ( !noCash );
@@ -115,10 +157,10 @@ public class banca {
 				boolean controllo;
 				do {
 					
-					System.out.println("Inserisci l'importo da prelevare");
+					System.out.print("Inserisci l'importo da prelevare: ");
 	    			String sPrelevare = tastiera.nextLine();
 					
-	    			controllo = controlNumber(sPrelevare);
+	    			controllo = controlNumberDouble(sPrelevare);
 	    			
 	    			if (controllo) {
 	    				double preleva = Double.parseDouble(sPrelevare);
@@ -142,10 +184,10 @@ public class banca {
 				boolean controllo;
 				do {
 					
-					System.out.println("Inserisci l'importo da depositare");
+					System.out.print("Inserisci l'importo da depositare: ");
 	    			String sDepositare = tastiera.nextLine();
 					
-	    			controllo = controlNumber(sDepositare);
+	    			controllo = controlNumberDouble(sDepositare);
 	    			
 	    			if (controllo) {
 	    				double deposita = Double.parseDouble(sDepositare);
@@ -188,7 +230,7 @@ public class banca {
 			        }
 			        
 			        System.out.print("Inserisci il periodo di investimento (in mesi): ");
-			        int mesiInvestimento = tastiera.nextInt();
+			        mesiInvestimento = tastiera.nextInt();
 			          
 			        durataInvestimento=true;
 			        
@@ -208,12 +250,12 @@ public class banca {
 			        // Simulazione del rischio
 			        double percentualeGuadagno = 0;
 			        double percentualePerdita = 0;
-			        boolean haGuadagnato = false;
+			        haGuadagnato = false;
 
 			        int esito = random.nextInt(100) + 1; // Numero casuale da 1 a 100
 			       
 			        switch (tipoInvestimento) {
-			            case "Breve":
+			            case "Breve":{
 			                if (esito <= 80) {
 			                    haGuadagnato = true;
 			                    percentualeGuadagno = random.nextDouble() * 10; // Guadagno fino al 10%
@@ -221,8 +263,9 @@ public class banca {
 			                    percentualePerdita = random.nextDouble() * 10; // Perdita fino al 10%
 			                }
 			                break;
+			            }
 
-			            case "Medio":
+			            case "Medio":{
 			                if (esito <= 60) {
 			                    haGuadagnato = true;
 			                    percentualeGuadagno = random.nextDouble() * 20; // Guadagno fino al 20%
@@ -230,8 +273,9 @@ public class banca {
 			                    percentualePerdita = random.nextDouble() * 20; // Perdita fino al 20%
 			                }
 			                break;
+			            }
 
-			            case "Lungo":
+			            case "Lungo":{
 			                if (esito <= 50) {
 			                    haGuadagnato = true;
 			                    percentualeGuadagno = random.nextDouble() * 30; // Guadagno fino al 30%
@@ -239,11 +283,11 @@ public class banca {
 			                    percentualePerdita = random.nextDouble() * 120; // Perdita fino al 120%
 			                }
 			                break;
+			            }
 			        }
 			        
 			     // Calcola il risultato dell'investimento
 			     
-			        double variazione; // Questa variabile conterrà la variazione (guadagno o perdita)
 
 			        if (haGuadagnato) {
 			            variazione = importoInvestito * (percentualeGuadagno / 100);
@@ -251,32 +295,23 @@ public class banca {
 			            variazione = importoInvestito * (percentualePerdita / 100);
 			        }
 
+				        variazione = Math.round(variazione*100.0)/100.0;
+				        
 			        
-			        //da qui
-			        if(nextmesi>=mesiInvestimento) {
-			        	
-			        	 //saldo finale  
 				        if (haGuadagnato) {
 				            saldoFinale = importoInvestito + variazione;
-				            saldoFinale =+ banca;
-				            System.out.println("Hai guadagnato : " + saldoFinale + " euro ");
 				        } else {
-				            saldoFinale = importoInvestito - variazione;
-				            saldoFinale =- banca;
-				            System.out.println("Hai perso  : " + saldoFinale + " euro ");
+				        	
+				            if (variazione <= importoInvestito) {
+				            	rosso = false;
+				            	saldoFinale = importoInvestito - variazione;
+				            } else {
+				            	rosso = true;
+				            	saldoFinale = variazione - importoInvestito;
+				            }
+				        	
 				        }
-			        	
-			        	
-			        	//Se si va in debito con la banca
-			        	if (banca < 0) {
-		                	System.out.println("Attenzione: il tuo conto è in rosso! /n Per poter fare altre transazioni o investimenti devi coprire il debito");
-		            	}
-			        	
-			        	durataInvestimento=false;
-			        	nextmesi=0;
-			        	
-			        }//a qui copia
-			        
+				        
 					}
 			        
 				System.out.print("Premi invio per continuare. ");
@@ -286,7 +321,10 @@ public class banca {
 			
 			case 4:{
 				mese++;
-				nextmesi++;
+				portafoglio += 100;
+				if (durataInvestimento) {
+					mesiInvestimento--;
+				}
 				
 				System.out.print("Premi invio per continuare. ");
 				sc.nextLine();
@@ -294,6 +332,13 @@ public class banca {
 			}
 			
 			case 5:{
+				if (durataInvestimento) {
+					mese += mesiInvestimento;
+					portafoglio += (100*mesiInvestimento);
+					mesiInvestimento = 0;
+				} else {
+					System.out.println ( "Per fare questa operazione devi prima fare un investimento!" );
+				}
 				
 				System.out.print("Premi invio per continuare. ");
 				sc.nextLine();
@@ -305,7 +350,6 @@ public class banca {
 		}
 		
 	}
-
 	
-	// test pop
+	
 }
