@@ -105,7 +105,9 @@ public class banca {
 						}
 
 						durataInvestimento = false;
-
+						
+						System.out.print("Premi invio per continuare. ");
+						sc.nextLine();
 					}
 
 					banca = Math.round(banca * 100.0) / 100.0; // tronco sempre a due cifre dopo la virgola
@@ -352,6 +354,7 @@ public class banca {
 
 					System.out.print("Premi invio per continuare. ");
 					sc.nextLine();
+					tastiera.nextLine(); // Per prendere invio a vuoto
 					break;
 
 				}
@@ -378,15 +381,16 @@ public class banca {
 					System.out.println("Per fare questa operazione devi prima fare un investimento!");
 				}
 
-				System.out.print("Premi invio per continuare. ");
-				sc.nextLine();
 				break;
 			}
 
 			}
 
 		}
-
+		
+		tastiera.close();
+		sc.close();
 	}
+	
 
 }
