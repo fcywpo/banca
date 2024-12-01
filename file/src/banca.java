@@ -1,5 +1,7 @@
-import java.util.Scanner;
-import java.util.Random;
+import java.util.Scanner; // Import necessario per Input
+import java.util.Random; // Import necessario per Random
+import java.util.InputMismatchException; // Import necessario per InputMismatchException
+
 
 public class banca {
 	
@@ -88,8 +90,10 @@ public class banca {
 			        	 //saldo finale  
 				        if (haGuadagnato) {
 				            System.out.println("Hai guadagnato: " + variazione + " euro ");
+				            
 				        } else {
 				            System.out.println("Hai perso: " + variazione + " euro ");
+				            
 				        }
 				        
 				        if (!rosso) {
@@ -105,6 +109,8 @@ public class banca {
 			        	
 			        	durataInvestimento=false;
 			        	
+			        	System.out.print("Premi invio per continuare. ");
+						sc.nextLine();
 			        }
 	            	
 	            	banca = Math.round(banca*100.0)/100.0; //tronco sempre a due cifre dopo la virgola
@@ -209,8 +215,6 @@ public class banca {
 
 			case 3:{
 				
-				//trycatch fare
-				
 					if(durataInvestimento) {
 						
 						 System.out.println("Stai gia' facendo un investimento");
@@ -220,17 +224,54 @@ public class banca {
 			        System.out.println("1. Breve durata (fino a 12 mesi)");
 			        System.out.println("2. Media durata (13 mesi - 5 anni)");
 			        System.out.println("3. Lunga durata (oltre 5 anni)");
+			     
+			        boolean valido=false;
+			        double importoInvestito=0;
 			        
-			        System.out.print("Inserisci l'importo che vuoi investire: ");
-			        double importoInvestito = tastiera.nextDouble();
+			        do {
+			        
+			        	try {
+			        		System.out.print("Inserisci l'importo che vuoi investire: ");
+			        		importoInvestito = tastiera.nextDouble();
 
-			        if (importoInvestito > banca) {
-			            System.out.println("Non hai abbastanza fondi per questo investimento.");
-			            return;
-			        }
+			        		if (importoInvestito > banca) {
+			        			System.out.println("Non hai abbastanza fondi per questo investimento.");
+			        			return;
+			        		} 
 			        
-			        System.out.print("Inserisci il periodo di investimento (in mesi): ");
-			        mesiInvestimento = tastiera.nextInt();
+			        		if (importoInvestito <= 0 || importoInvestito > banca) {
+			        			System.out.println("Errore: Inserisci un importo valido (maggiore di 0 e minore del saldo in banca).");
+			        		} else {
+			        			valido = true; // Se tutto è valido, esci dal ciclo
+			        		}
+			        
+			        	}catch (InputMismatchException e) {
+			        		System.out.println("Errore: hai inserito un valore non valido. Inserisci un numero intero per il periodo di investimento e un numero decimale per l'importo.");
+			        		tastiera.nextLine(); // Pulisce il buffer , questo mi permette di evitare loop infiniti cosi mi elimina l'errore che mi blocca di andare avanti
+			        		}
+			        
+			        } while (!valido);
+			           
+			        valido = false; // Reimposta la variabile
+			        
+			        do {
+			            try {
+			                System.out.print("Inserisci il periodo di investimento (in mesi): ");
+			                mesiInvestimento = tastiera.nextInt();
+
+			                if (mesiInvestimento <= 0) {
+			                    System.out.println("Errore: Inserisci un valore valido (maggiore di 0).");
+			                } else {
+			                    valido = true; // Se il valore è valido, esci dal ciclo
+			                }
+
+			            } catch (InputMismatchException e) {
+			                System.out.println("Errore: hai inserito un valore non valido. Inserisci un numero intero per i mesi.");
+			                tastiera.nextLine(); // Pulisce il buffer
+			            }
+			        } while (!valido);
+			        
+			       
 			          
 			        durataInvestimento=true;
 			        
@@ -258,9 +299,9 @@ public class banca {
 			            case "Breve":{
 			                if (esito <= 80) {
 			                    haGuadagnato = true;
-			                    percentualeGuadagno = random.nextDouble() * 10; // Guadagno fino al 10%
+			                    percentualeGuadagno = random.nextDouble() * 20; // Guadagno fino al 20%
 			                } else {
-			                    percentualePerdita = random.nextDouble() * 10; // Perdita fino al 10%
+			                    percentualePerdita = random.nextDouble() * 15; // Perdita fino al 15%
 			                }
 			                break;
 			            }
@@ -268,17 +309,17 @@ public class banca {
 			            case "Medio":{
 			                if (esito <= 60) {
 			                    haGuadagnato = true;
-			                    percentualeGuadagno = random.nextDouble() * 20; // Guadagno fino al 20%
+			                    percentualeGuadagno = random.nextDouble() * 50; // Guadagno fino al 40%
 			                } else {
-			                    percentualePerdita = random.nextDouble() * 20; // Perdita fino al 20%
+			                    percentualePerdita = random.nextDouble() * 80; // Perdita fino al 80%
 			                }
 			                break;
 			            }
 
 			            case "Lungo":{
-			                if (esito <= 50) {
+			                if (esito <= 35) {
 			                    haGuadagnato = true;
-			                    percentualeGuadagno = random.nextDouble() * 30; // Guadagno fino al 30%
+			                    percentualeGuadagno = random.nextDouble() * 80; // Guadagno fino al 80%
 			                } else {
 			                    percentualePerdita = random.nextDouble() * 120; // Perdita fino al 120%
 			                }
@@ -312,12 +353,15 @@ public class banca {
 				        	
 				        }
 				        
-					}
+			       
 			        
 				System.out.print("Premi invio per continuare. ");
 				sc.nextLine();
 				break;
+				
+				}
 			}
+			
 			
 			case 4:{
 				mese++;
