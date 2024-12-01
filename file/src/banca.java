@@ -311,9 +311,9 @@ public class banca {
 					case "Medio": {
 						if (esito <= 60) {
 							haGuadagnato = true;
-							percentualeGuadagno = random.nextDouble() * 50 + 25 ; // Guadagno fino al 50%
+							percentualeGuadagno = random.nextDouble(50) * + 25 ; // Guadagno fino al 50%
 						} else {
-							percentualePerdita = random.nextDouble() * 80 + 40; // Perdita fino al 80%
+							percentualePerdita = random.nextDouble(80) * + 40; // Perdita fino al 80%
 						}
 						break;
 					}
@@ -321,9 +321,9 @@ public class banca {
 					case "Lungo": {
 						if (esito <= 35) {
 							haGuadagnato = true;
-							percentualeGuadagno = random.nextDouble() * 80 + 60; // Guadagno fino al 80%
+							percentualeGuadagno = random.nextDouble(80) *  + 60; // Guadagno fino al 80%
 						} else {
-							percentualePerdita = random.nextDouble() * 120 + 80 ; // Perdita fino al 120%
+							percentualePerdita = random.nextDouble(120) * + 80 ; // Perdita fino al 120%
 						}
 						break;
 					}
