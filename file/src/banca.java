@@ -83,7 +83,8 @@ public class banca {
 
 					if (mesiInvestimento == 0 && durataInvestimento) {
 
-						// saldo finale
+						System.out.println();
+
 						if (haGuadagnato) {
 							System.out.println("Hai guadagnato: " + variazione + " euro ");
 
@@ -98,16 +99,13 @@ public class banca {
 							banca -= saldoFinale;
 						}
 
-						// Se si va in debito con la banca
 						if (banca < 0) {
 							System.out.println(
-									"Attenzione: il tuo conto è in rosso! \n Per poter fare altre transazioni o investimenti devi coprire il debito");
+									"Attenzione: il tuo conto è in rosso! \nPer poter fare altre transazioni o investimenti devi coprire il debito");
 						}
 
 						durataInvestimento = false;
 
-						System.out.print("Premi invio per continuare. ");
-						sc.nextLine();
 					}
 
 					banca = Math.round(banca * 100.0) / 100.0; // tronco sempre a due cifre dopo la virgola
@@ -340,6 +338,7 @@ public class banca {
 					variazione = Math.round(variazione * 100.0) / 100.0;
 
 					if (haGuadagnato) {
+						rosso = false;
 						saldoFinale = importoInvestito + variazione;
 					} else {
 						if (variazione <= importoInvestito) {
