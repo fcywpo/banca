@@ -161,7 +161,7 @@ public class banca {
 				do {
 
 					System.out.print("Inserisci l'importo da prelevare: ");
-					String sPrelevare = tastiera.nextLine();
+					String sPrelevare = tastiera.nextLine().trim();
 
 					controllo = controlNumberDouble(sPrelevare);
 
@@ -190,7 +190,7 @@ public class banca {
 				do {
 
 					System.out.print("Inserisci l'importo da depositare: ");
-					String sDepositare = tastiera.nextLine();
+					String sDepositare = tastiera.nextLine().trim();
 
 					controllo = controlNumberDouble(sDepositare);
 
