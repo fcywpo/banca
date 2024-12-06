@@ -5,7 +5,6 @@ import java.util.InputMismatchException;
 public class banca {
 
 	public static void menuPrinc() {
-
 		System.out.println("\nBANCA");
 		System.out.println("1. Preleva dalla banca");
 		System.out.println("2. Deposita in banca");
@@ -63,7 +62,6 @@ public class banca {
 		boolean durataInvestimento = false, haGuadagnato = false, rosso = false;
 
 		while (continua) {
-
 			if (mese == 13) {
 				mese = 1;
 				anno++;
@@ -78,11 +76,8 @@ public class banca {
 
 			do {
 				boolean controllo;
-
 				do {
-
 					if (mesiInvestimento == 0 && durataInvestimento) {
-
 						System.out.println();
 
 						if (haGuadagnato) {
@@ -90,7 +85,6 @@ public class banca {
 
 						} else {
 							System.out.println("Hai perso: " + variazione + " euro ");
-
 						}
 
 						if (!rosso) {
@@ -159,7 +153,6 @@ public class banca {
 			case 1: {
 				boolean controllo;
 				do {
-
 					System.out.print("Inserisci l'importo da prelevare: ");
 					String sPrelevare = tastiera.nextLine().trim();
 
@@ -188,7 +181,6 @@ public class banca {
 			case 2: {
 				boolean controllo;
 				do {
-
 					System.out.print("Inserisci l'importo da depositare: ");
 					String sDepositare = tastiera.nextLine().trim();
 
@@ -217,11 +209,9 @@ public class banca {
 			case 3: {
 
 				if (durataInvestimento) {
-
 					System.out.println("Stai gia' facendo un investimento");
 
 				} else {
-
 					System.out.println("1. Breve durata (fino a 12 mesi)");
 					System.out.println("2. Media durata (13 mesi - 5 anni)");
 					System.out.println("3. Lunga durata (oltre 5 anni)");
@@ -230,7 +220,6 @@ public class banca {
 					double importoInvestito = 0;
 
 					do {
-
 						try {
 							System.out.print("Inserisci l'importo che vuoi investire: ");
 							importoInvestito = tastiera.nextDouble();
