@@ -1,11 +1,10 @@
-import java.util.Scanner; // Import necessario per Input
-import java.util.Random; // Import necessario per Random
-import java.util.InputMismatchException; // Import necessario per InputMismatchException
+import java.util.Scanner;
+import java.util.Random;
+import java.util.InputMismatchException;
 
 public class banca {
 
 	public static void menuPrinc() {
-
 		System.out.println("\nBANCA");
 		System.out.println("1. Preleva dalla banca");
 		System.out.println("2. Deposita in banca");
@@ -48,7 +47,6 @@ public class banca {
 		Scanner tastiera = new Scanner(System.in);
 		Random random = new Random();
 
-		// Scanner per break
 		Scanner sc = new Scanner(System.in);
 
 		boolean continua = true; // variabile per fare un ciclo infinito
@@ -59,11 +57,10 @@ public class banca {
 
 		// variabili x investimento
 		int mesiInvestimento = 0;
-		double saldoFinale = 0.0, variazione = 0.0; // Questa variabile conterrà la variazione (guadagno o perdita)
+		double saldoFinale = 0.0, variazione = 0.0;
 		boolean durataInvestimento = false, haGuadagnato = false, rosso = false;
 
 		while (continua) {
-
 			if (mese == 13) {
 				mese = 1;
 				anno++;
@@ -78,11 +75,8 @@ public class banca {
 
 			do {
 				boolean controllo;
-
 				do {
-
 					if (mesiInvestimento == 0 && durataInvestimento) {
-
 						System.out.println();
 
 						if (haGuadagnato) {
@@ -90,7 +84,6 @@ public class banca {
 
 						} else {
 							System.out.println("Hai perso: " + variazione + " euro ");
-
 						}
 
 						if (!rosso) {
@@ -159,7 +152,6 @@ public class banca {
 			case 1: {
 				boolean controllo;
 				do {
-
 					System.out.print("Inserisci l'importo da prelevare: ");
 					String sPrelevare = tastiera.nextLine().trim();
 
@@ -188,7 +180,6 @@ public class banca {
 			case 2: {
 				boolean controllo;
 				do {
-
 					System.out.print("Inserisci l'importo da depositare: ");
 					String sDepositare = tastiera.nextLine().trim();
 
@@ -217,11 +208,9 @@ public class banca {
 			case 3: {
 
 				if (durataInvestimento) {
-
 					System.out.println("Stai gia' facendo un investimento");
 
 				} else {
-
 					System.out.println("1. Breve durata (fino a 12 mesi)");
 					System.out.println("2. Media durata (13 mesi - 5 anni)");
 					System.out.println("3. Lunga durata (oltre 5 anni)");
@@ -230,7 +219,6 @@ public class banca {
 					double importoInvestito = 0;
 
 					do {
-
 						try {
 							System.out.print("Inserisci l'importo che vuoi investire: ");
 							importoInvestito = tastiera.nextDouble();
@@ -243,7 +231,7 @@ public class banca {
 								System.out.println(
 										"Errore: Inserisci un importo valido (maggiore di 0 e minore del saldo in banca).");
 							} else {
-								valido = true; // Se tutto è valido, esci dal ciclo
+								valido = true;
 							}
 
 						} catch (InputMismatchException e) {
@@ -265,7 +253,7 @@ public class banca {
 							if (mesiInvestimento <= 0) {
 								System.out.println("Errore: Inserisci un valore valido (maggiore di 0).");
 							} else {
-								valido = true; // Se il valore è valido, esci dal ciclo
+								valido = true;
 							}
 
 						} catch (InputMismatchException e) {
@@ -276,11 +264,9 @@ public class banca {
 					} while (!valido);
 
 					durataInvestimento = true;
-
-					// Sottraiamo l'importo investito dal saldo iniziale
+					
 					banca -= importoInvestito;
 
-					// Determina il tipo di investimento in base al periodo
 					String tipoInvestimento;
 					if (mesiInvestimento <= 12) {
 						tipoInvestimento = "Breve";
@@ -290,20 +276,19 @@ public class banca {
 						tipoInvestimento = "Lungo";
 					}
 
-					// Simulazione del rischio
 					double percentualeGuadagno = 0;
 					double percentualePerdita = 0;
 					haGuadagnato = false;
 
-					int esito = random.nextInt(100) + 1; // Numero casuale da 1 a 100
+					int esito = random.nextInt(100) + 1;
 
 					switch (tipoInvestimento) {
 					case "Breve": {
 						if (esito <= 80) {
 							haGuadagnato = true;
-							percentualeGuadagno = random.nextDouble() * 20; // Guadagno fino al 20%
+							percentualeGuadagno = random.nextDouble() * 20;
 						} else {
-							percentualePerdita = random.nextDouble() * 15; // Perdita fino al 15%
+							percentualePerdita = random.nextDouble() * 15;
 						}
 						break;
 					}
@@ -311,9 +296,9 @@ public class banca {
 					case "Medio": {
 						if (esito <= 60) {
 							haGuadagnato = true;
-							percentualeGuadagno = random.nextDouble() * 25 + 25; // Guadagno fino al 50%
+							percentualeGuadagno = random.nextDouble() * 25 + 25;
 						} else {
-							percentualePerdita = random.nextDouble() * 40 + 40; // Perdita fino al 80%
+							percentualePerdita = random.nextDouble() * 40 + 40;
 						}
 						break;
 					}
@@ -321,9 +306,9 @@ public class banca {
 					case "Lungo": {
 						if (esito <= 35) {
 							haGuadagnato = true;
-							percentualeGuadagno = random.nextDouble() * 20 + 60; // Guadagno fino al 80%
+							percentualeGuadagno = random.nextDouble() * 20 + 60;
 						} else {
-							percentualePerdita = random.nextDouble() * 40 + 80; // Perdita fino al 120%
+							percentualePerdita = random.nextDouble() * 40 + 80;
 						}
 						break;
 					}
