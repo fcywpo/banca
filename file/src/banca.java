@@ -47,7 +47,6 @@ public class banca {
 		Scanner tastiera = new Scanner(System.in);
 		Random random = new Random();
 
-		// Scanner per break
 		Scanner sc = new Scanner(System.in);
 
 		boolean continua = true; // variabile per fare un ciclo infinito
